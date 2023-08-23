@@ -1,12 +1,13 @@
 ﻿<template>
   <v-dialog
-      v-model="dialogVisible"
-      max-width="600"
+    v-model="$store.getters.getDialogVisible"
+    max-width="600"
+    @click:outside="$store.commit('hideDialog')"
   >
     <v-card>
-      <v-card-title>{{ photo.title }}</v-card-title>
+      <v-card-title>{{ full_title }}</v-card-title>
       <v-card-text>
-        <v-img :src="photo.img"/>
+        <v-img :src="$store.getters.getCurrentPhoto.url" />
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -15,20 +16,14 @@
 <script>
 export default {
   name: "PhotoDialog",
-  props: {
-    photo: {
-      type: Object,
-      required: true,
+  props: {},
+  data: () => ({}),
+  computed: {
+    full_title() {
+      return `Photo title - ${this.$store.getters.getCurrentPhoto.title}`;
     },
-    dialogVisible: {
-      type: Boolean,
-      default: false,
-    }
   },
-  data: () => ({})
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
